@@ -1,30 +1,18 @@
 (() => {
   'use strict';
 
-  /* ================= AYARLAR (buradan değiştir) ================= */
+  /* ================= AYARLAR ================= */
   const CLUB_NAME = 'Veri Bilimi Topluluğu';
-  const QUIZ_LENGTH = 5;          // kullanıcıya gösterilecek soru sayısı
-  const IDLE_RESET_MS = 90000;    // etkileşim yoksa başa dön (sonraki kişi için)
+  const QUIZ_LENGTH = 5;
+  const IDLE_RESET_MS = 90000;
 
   const LEVELS = [
-    { emoji: '🧭', title: "Excel'e Bile Güvenemeyen Kaşif",
-      desc: 'Veriyle ilk karşılaşma. Merak var, rehber henüz yok. Standa gel, birlikte başlayalım.',
-      caption: 'R² = 0.00 · motivasyon: yüksek' },
-    { emoji: '🐣', title: 'Veriyi Koklayan Çırak',
-      desc: 'Bir şeyler sezmeye başladın. Hâlâ Google’a bakıyorsun ama artık doğru kelimeleri arıyorsun.',
-      caption: 'model: yaklaşık ama cesur' },
-    { emoji: '🐼', title: "Pandas'ı Hâlâ Hayvanat Bahçesinde Arayan",
-      desc: 'Yarı yoldasın. Doğruların tesadüf değil, yanlışların da değerli eğitim verisi.',
-      caption: 'korelasyon var, nedensellik tartışmalı' },
-    { emoji: '🕵️', title: 'Ortalama Üstü Veri Dedektifi',
-      desc: 'Aykırı değerleri yakalıyor, kırpılmış eksenli grafiğe şüpheyle bakıyorsun.',
-      caption: 'güven aralığı dar, özgüven geniş' },
-    { emoji: '☕', title: 'Junior Data Scientist (Kahveli Sürüm)',
-      desc: 'Neredeyse tam. LinkedIn’de unvanını güncellemene ramak kaldı.',
-      caption: 'R² = 0.94 · hiperparametre: kahve' },
-    { emoji: '👑', title: 'Veri Biliminin Seçilmiş Kişisi',
-      desc: 'Ya çok iyisin ya da test setini sızdırdın. İkisini de seviyoruz.',
-      caption: 'overfit yok, sadece yetenek' }
+    { emoji: '🧭', title: "Excel'e Bile Güvenemeyen Kaşif", desc: 'Veriyle ilk karşılaşma. Merak var, rehber henüz yok. Standa gel, birlikte başlayalım.', caption: 'R² = 0.00 · motivasyon: yüksek' },
+    { emoji: '🐣', title: 'Veriyi Koklayan Çırak', desc: 'Bir şeyler sezmeye başladın. Hâlâ Google’a bakıyorsun ama artık doğru kelimeleri arıyorsun.', caption: 'model: yaklaşık ama cesur' },
+    { emoji: '🐼', title: "Pandas'ı Hâlâ Hayvanat Bahçesinde Arayan", desc: 'Yarı yoldasın. Doğruların tesadüf değil, yanlışların da değerli eğitim verisi.', caption: 'korelasyon var, nedensellik tartışmalı' },
+    { emoji: '🕵️', title: 'Ortalama Üstü Veri Dedektifi', desc: 'Aykırı değerleri yakalıyor, kırpılmış eksenli grafiğe şüpheyle bakıyorsun.', caption: 'güven aralığı dar, özgüven geniş' },
+    { emoji: '☕', title: 'Junior Data Scientist (Kahveli Sürüm)', desc: 'Neredeyse tam. LinkedIn’de unvanını güncellemene ramak kaldı.', caption: 'R² = 0.94 · hiperparametre: kahve' },
+    { emoji: '👑', title: 'Veri Biliminin Seçilmiş Kişisi', desc: 'Ya çok iyisin ya da test setini sızdırdın. İkisini de seviyoruz.', caption: 'overfit yok, sadece yetenek' }
   ];
 
   const OK_MSGS = ['Doğru! 🎯', 'Tam isabet!', 'p < 0.05 ile haklısın.', 'Bu veriyi çözdün.', 'Temiz iş! ✨'];
@@ -42,7 +30,6 @@
   const SVGNS = 'http://www.w3.org/2000/svg';
   const $ = (id) => document.getElementById(id);
 
-  // Tüm metinler textContent ile yazılır; innerHTML hiç kullanılmaz (XSS yüzeyi yok).
   function el(tag, cls, text) {
     const e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -80,9 +67,6 @@
     q && typeof q.q === 'string' && Array.isArray(q.o) && q.o.length === 4 &&
     new Set(q.o).size === 4
   );
-  if (POOL.length < QUIZ_LENGTH) {
-    console.error('Soru havuzu yetersiz veya hatalı biçimde.');
-  }
   const N = Math.min(QUIZ_LENGTH, POOL.length);
 
   /* ================= DURUM ================= */
@@ -130,8 +114,7 @@
   /* ================= KARŞILAMA ================= */
   function goWelcome() {
     clearTimeout(idleTimer);
-    $('hero').textContent = '';
-    $('hero').appendChild(makeChart(3));
+    $('hero').textContent = '';$('hero').appendChild(makeChart(3));
     show('s-welcome');
   }
 
@@ -197,7 +180,7 @@
   }
 
   function answer(idx, btn) {
-    if (st.locked) return;     // çift dokunmayı engelle
+    if (st.locked) return;
     st.locked = true;
     const q = st.qs[st.i];
     const ok = q.opts[idx].correct === true;
@@ -269,7 +252,7 @@
       try {
         const p = navigator.share({ title: 'Veri Bilimi Seviyem', text: st.lastShare || '', url: location.href });
         if (p && p.catch) p.catch(() => {});
-      } catch (e) { /* kullanıcı iptal etti veya desteklenmiyor */ }
+      } catch (e) {}
     });
   }
 
@@ -299,10 +282,8 @@
   /* ================= BAŞLAT ================= */
   function init() {
     $('clubName').textContent = CLUB_NAME;
-    $('start').addEventListener('click', () => { startQuiz(); bumpIdle(); });
-    $('next').addEventListener('click', nextStep);
-    $('again').addEventListener('click', goWelcome);
-    $('brand').addEventListener('click', brandTap);
+    $('start').addEventListener('click', () => { startQuiz(); bumpIdle(); });$('next').addEventListener('click', nextStep);
+    $('again').addEventListener('click', goWelcome);$('brand').addEventListener('click', brandTap);
     ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, bumpIdle, { passive: true }));
     setupShare();
     if (POOL.length < QUIZ_LENGTH) $('start').disabled = true;
