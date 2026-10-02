@@ -1,5 +1,7 @@
 // Soru havuzu.
 // KURAL: "o" dizisinde DOĞRU CEVAP HER ZAMAN İLK sırada yazılır (o[0]).
+// Uygulama seçenekleri her gösterimde rastgele karıştırır; doğru cevap yeri değişir.
+// "e" = cevaptan sonra gösterilen tek cümlelik açıklama.
 window.QUESTIONS = [
   {
     q: "Bir veri setinde en sık tekrar eden değere ne denir?",
