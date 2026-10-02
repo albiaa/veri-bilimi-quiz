@@ -29,15 +29,15 @@ window.QUESTIONS = [
     e: "Öneri sistemleri geçmiş davranışından ve benzer kullanıcılardan öğrenir."
   },
   {
-    q: "Dondurma satışları arttıkça boğulma vakaları da artıyor. Bu durum neyi gösterir?",
-    o: [
-      "Korelasyon, nedensellik anlamına gelmez (yaz mevsimi gibi üçüncü bir etken olabilir)",
-      "Dondurma yemek boğulmaya yol açar",
-      "Boğulmalar dondurma satışını artırır",
-      "Veri kesinlikle yanlış toplanmıştır"
-    ],
-    e: "İki şey birlikte artıyor diye biri diğerine neden olmaz."
-  },
+  q: "Bir makine öğrenmesi modelinin eğitim verisinde %99 başarı gösterip, hiç görmediği test verisinde %55 başarıda kalması durumuna ne ad verilir?",
+  o: [
+    "Aşırı Uyum (Overfitting)",
+    "Eksik Uyum (Underfitting)",
+    "Boyut Laneti (Data Imbalance)",
+    "Çoklu Bağlantı (Multicollinearity)"
+  ],
+  e: "Model eğitim verisini ezberlediğinde (Overfitting) genelleme yeteneğini kaybeder ve yeni test verilerinde düşük performans gösterir."
+},
   {
     q: "Python'da tablo biçimindeki verilerle çalışmak için en popüler kütüphane hangisidir?",
     o: ["Pandas", "Flask", "Tkinter", "Pygame"],
