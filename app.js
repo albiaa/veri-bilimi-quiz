@@ -260,18 +260,6 @@
     st.lastShare = `Veri bilimi mini testinde ${st.score}/${N} yaptım: ${lv.title} ${lv.emoji}`;
   }
 
-  /* ================= PAYLAŞ ================= */
-  function setupShare() {
-    if (typeof navigator.share !== 'function') return;
-    const b = $('share');
-    b.hidden = false;
-    b.addEventListener('click', () => {
-      try {
-        const p = navigator.share({ title: 'Veri Bilimi Seviyem', text: st.lastShare || '', url: location.href });
-        if (p && p.catch) p.catch(() => {});
-      } catch (e) { /* kullanıcı iptal etti veya desteklenmiyor */ }
-    });
-  }
 
   /* ================= EASTER EGG ================= */
   let taps = 0, tapTimer = null;
@@ -304,7 +292,6 @@
     $('again').addEventListener('click', goWelcome);
     $('brand').addEventListener('click', brandTap);
     ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, bumpIdle, { passive: true }));
-    setupShare();
     if (POOL.length < QUIZ_LENGTH) $('start').disabled = true;
     goWelcome();
   }
