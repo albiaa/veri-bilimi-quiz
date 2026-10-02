@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Güvenlik: yalnızca kendi dosyalarımız çalışır. Dış script, dış istek, inline script yok. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#EAF2F7">
+  <title>Veri Bilimi Yeteneğini Test Et!</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- 1) Karşılama -->
+    <section id="s-welcome" class="screen">
+      <button id="brand" class="brand" type="button"><span aria-hidden="true">📊</span> <span id="clubName"></span></button>
+      <div id="hero" class="hero" aria-hidden="true"></div>
+      <h1>Veri Bilimi Yeteneğini Test Et!</h1>
+      <p class="lead">5 rastgele soru, yaklaşık 45 saniye. Kayıt yok, giriş yok, hiçbir veri toplanmıyor.</p>
+      <button id="start" class="btn primary" type="button">Başla</button>
+      <p class="fine">Sonunda sana komik bir unvan verilecek.</p>
+    </section>
+
+    <!-- 2) Soru ekranı -->
+    <section id="s-quiz" class="screen" hidden>
+      <div id="progress" class="progress"></div>
+      <h2 id="qtext" class="qtext" tabindex="-1"></h2>
+      <div id="opts" class="opts" role="group" aria-labelledby="qtext"></div>
+      <div id="fb" class="fb" aria-live="polite"></div>
+      <button id="next" class="btn primary" type="button" hidden>Sonraki</button>
+    </section>
+
+    <!-- 3) Sonuç -->
+    <section id="s-result" class="screen" hidden>
+      <article id="card" class="card" tabindex="-1"></article>
+      <p class="show">Bunu arkadaşlarına göster 😎</p>
+      <div class="row">
+        <button id="share" class="btn ghost" type="button" hidden>Paylaş</button>
+        <button id="again" class="btn primary" type="button">Yeni test</button>
+      </div>
+      <p class="fine">Ekran görüntüsü alıp paylaşabilirsin.</p>
+    </section>
+
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
