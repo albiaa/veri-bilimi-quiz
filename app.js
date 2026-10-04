@@ -3,7 +3,7 @@
 
   /* ================= AYARLAR (buradan değiştir) ================= */
   const CLUB_NAME = 'Veri Bilimi Topluluğu';
-  const QUIZ_LENGTH = 5;          // kullanıcıya gösterilecek soru sayısı
+  const LEVEL_COUNT = 5;          // zorluk seviyesi sayısı = test uzunluğu (her seviyeden 1 soru)
   const IDLE_RESET_MS = 90000;    // etkileşim yoksa başa dön (sonraki kişi için)
 
   const LEVELS = [
@@ -76,14 +76,30 @@
   const pick = (arr) => arr[randInt(arr.length)];
 
   /* ================= SORU HAVUZU DOĞRULAMA ================= */
-  const POOL = (Array.isArray(window.QUESTIONS) ? window.QUESTIONS : []).filter((q) =>
-    q && typeof q.q === 'string' && Array.isArray(q.o) && q.o.length === 4 &&
-    new Set(q.o).size === 4
-  );
-  if (POOL.length < QUIZ_LENGTH) {
-    console.error('Soru havuzu yetersiz veya hatalı biçimde.');
+  // Sorular seviyelere (l: 1..5) ayrılır. Geçersiz biçimli sorular sessizce atlanır.
+  const BY_LEVEL = [];
+  for (let i = 0; i < LEVEL_COUNT; i++) BY_LEVEL.push([]);
+  (Array.isArray(window.QUESTIONS) ? window.QUESTIONS : []).forEach((q) => {
+    if (q && typeof q.q === 'string' && Array.isArray(q.o) && q.o.length === 4 &&
+        new Set(q.o).size === 4 && Number.isInteger(q.l) && q.l >= 1 && q.l <= LEVEL_COUNT) {
+      BY_LEVEL[q.l - 1].push(q);
+    }
+  });
+  const POOL_OK = BY_LEVEL.every((arr) => arr.length > 0);
+  if (!POOL_OK) {
+    console.error('Soru havuzu yetersiz: her zorluk seviyesinde en az 1 geçerli soru olmalı.');
   }
-  const N = Math.min(QUIZ_LENGTH, POOL.length);
+  const N = LEVEL_COUNT;
+  // Arka arkaya gelen iki kişiye aynı soruyu vermemek için (sadece bellekte tutulur).
+  const lastPicked = [];
+
+  function pickFromLevel(level) {
+    const arr = BY_LEVEL[level];
+    const fresh = arr.filter((q) => q !== lastPicked[level]);
+    const chosen = pick(fresh.length ? fresh : arr);
+    lastPicked[level] = chosen;
+    return chosen;
+  }
 
   /* ================= DURUM ================= */
   const st = { qs: [], i: 0, score: 0, results: [], locked: false };
@@ -137,7 +153,7 @@
 
   /* ================= QUIZ ================= */
   function startQuiz() {
-    const picked = shuffle(POOL).slice(0, N);
+    const picked = BY_LEVEL.map((_, level) => pickFromLevel(level)); // Kolay → Zor, her seviyeden 1
     st.qs = picked.map((q) => ({
       q: q.q,
       e: typeof q.e === 'string' ? q.e : '',
@@ -260,6 +276,18 @@
     st.lastShare = `Veri bilimi mini testinde ${st.score}/${N} yaptım: ${lv.title} ${lv.emoji}`;
   }
 
+  /* ================= PAYLAŞ ================= */
+  function setupShare() {
+    if (typeof navigator.share !== 'function') return;
+    const b = $('share');
+    b.hidden = false;
+    b.addEventListener('click', () => {
+      try {
+        const p = navigator.share({ title: 'Veri Bilimi Seviyem', text: st.lastShare || '', url: location.href });
+        if (p && p.catch) p.catch(() => {});
+      } catch (e) { /* kullanıcı iptal etti veya desteklenmiyor */ }
+    });
+  }
 
   /* ================= EASTER EGG ================= */
   let taps = 0, tapTimer = null;
@@ -292,7 +320,8 @@
     $('again').addEventListener('click', goWelcome);
     $('brand').addEventListener('click', brandTap);
     ['pointerdown', 'keydown'].forEach((ev) => document.addEventListener(ev, bumpIdle, { passive: true }));
-    if (POOL.length < QUIZ_LENGTH) $('start').disabled = true;
+    setupShare();
+    if (!POOL_OK) $('start').disabled = true;
     goWelcome();
   }
 
