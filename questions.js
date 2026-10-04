@@ -53,7 +53,7 @@ window.QUESTIONS = [
   {
     l: 1,
     q: "Bir model eğitim verisini ezberleyip yeni verilerde kötü sonuç veriyorsa buna ne denir?",
-    o: ["Overfitting (aşırı öğrenme)", "Underfitting", "Normalizasyon", "Clustering"],
+    o: ["Overfitting", "Underfitting", "Normalizasyon", "Clustering"],
     e: "Overfitting: model gürültüyü bile ezberler, genelleme yapamaz."
   },
   {
@@ -65,7 +65,7 @@ window.QUESTIONS = [
   {
     l: 1,
     q: "Bir sınıfta herkes 60–80 arası alırken bir öğrenci 5 aldı. Bu değer için ne denir?",
-    o: ["Aykırı değer (outlier)", "Mod", "Etiket", "Normal dağılım"],
+    o: ["Aykırı değer", "Mod", "Etiket", "Normal dağılım"],
     e: "Aykırı değerler ortalamayı ciddi şekilde çarpıtabilir."
   },
 
@@ -121,7 +121,7 @@ window.QUESTIONS = [
   {
     l: 2,
     q: "Hem eğitim hem test verisinde kötü performans gösteren model için ne söylenebilir?",
-    o: ["Underfitting (eksik öğrenme)", "Overfitting (aşırı öğrenme)", "Mükemmel genelleme yapmıştır", "Veride hiç gürültü yoktur"],
+    o: ["Underfitting", "Overfitting", "Mükemmel genelleme yapmıştır", "Veride hiç gürültü yoktur"],
     e: "Model veriyi bile öğrenememiştir: fazla basit, yani underfitting."
   },
   {
@@ -183,13 +183,13 @@ window.QUESTIONS = [
   {
     l: 3,
     q: "Görüntü tanımada (ör. röntgen, yüz) en yaygın kullanılan sinir ağı türü hangisidir?",
-    o: ["CNN (evrişimli sinir ağı)", "K-means", "Doğrusal regresyon", "Apriori"],
+    o: ["CNN", "K-means", "Doğrusal regresyon", "Apriori"],
     e: "CNN'ler görüntüdeki kenar, doku gibi örüntüleri yakalamakta başarılıdır."
   },
   {
     l: 3,
     q: "Modele vermeden önce 'şehir' gibi bir metin sütunu için ne yapılır?",
-    o: ["Sayısal koda çevrilir (ör. one-hot)", "Sütunun ortalaması alınır", "Doğrudan grafiğe dökülür", "Eğitimden sonra eklenir"],
+    o: ["Sayısal koda çevrilir", "Sütunun ortalaması alınır", "Doğrudan grafiğe dökülür", "Eğitimden sonra eklenir"],
     e: "Çoğu model sayı ister; kategoriler one-hot gibi yöntemlerle sayıya çevrilir."
   },
 
@@ -233,7 +233,7 @@ window.QUESTIONS = [
   {
     l: 4,
     q: "ChatGPT gibi büyük dil modelleri (LLM) temelde ne yapar?",
-    o: ["Metnin devamındaki parçayı (token) tahmin eder", "Her cevabı canlı olarak internetten arar", "Cümlelerin doğruluğunu garanti eder", "Hazır cevapları tekrar eder"],
+    o: ["Metnin devamındaki parçayı(token) tahmin eder", "Her cevabı canlı olarak internetten arar", "Cümlelerin doğruluğunu garanti eder", "Hazır cevapları tekrar eder"],
     e: "LLM'ler olasılığı yüksek devamı üretir; bu yüzden bazen yanlışı da kendinden emin söyler."
   },
   {
@@ -245,7 +245,7 @@ window.QUESTIONS = [
   {
     l: 4,
     q: "Transformer modellerinin (GPT, BERT) temel yeniliği hangisidir?",
-    o: ["Attention (dikkat) mekanizması", "Evrişim katmanı", "Karar ağacı", "Kümeleme"],
+    o: ["Attention mekanizması", "Evrişim katmanı", "Karar ağacı", "Kümeleme"],
     e: "Attention, her kelimenin diğer kelimelere ne kadar önem vereceğini öğrenir."
   },
   {
@@ -259,7 +259,7 @@ window.QUESTIONS = [
   {
     l: 5,
     q: "Bir dil modelinin güncel veya özel belgelere dayanarak cevap vermesi için sık kullanılan yöntem hangisidir?",
-    o: ["RAG (arama destekli üretim)", "Dropout", "K-means", "Min-max ölçekleme"],
+    o: ["RAG", "Dropout", "K-means", "Min-max ölçekleme"],
     e: "RAG, modelin cevap vermeden önce ilgili belgeleri bulup bağlama eklemesidir."
   },
   {
@@ -312,8 +312,13 @@ window.QUESTIONS = [
   },
   {
     l: 5,
-    q: "L1 düzenlileştirme (Lasso) modele ne yaptırır?",
-    o: ["Bazı katsayıları sıfırlayarak özellik seçer", "Veriyi 0–1 aralığına ölçekler", "Eğitim verisini çoğaltır", "Öğrenme hızını otomatik ayarlar"],
-    e: "L1 cezası önemsiz özelliklerin katsayısını tam sıfıra çeker."
-  }
+    q: "Büyük Dil Modellerinde (LLM) kullanılan Transformer mimarisinin temelini oluşturan mekanizma nedir?",
+    o: [
+      "Self-Attention (Öz-Dikkat)",
+      "Convolutional Neural Network (CNN)",
+      "Recurrent Neural Network (RNN)",
+      "Gradient Descent (Eğim İnişi)"
+    ],
+    e: "Self-Attention mekanizması, bir cümleyi işlerken her kelimenin cümledeki diğer tüm kelimelerle olan ilişkisini ve ağırlığını aynı anda hesaplamasını sağlar."
+  },
 ];
